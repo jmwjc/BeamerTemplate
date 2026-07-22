@@ -1,0 +1,127 @@
+\section{研究方案}
+\begin{frame}{技术路线图}
+    \centering
+    \includegraphics[height=0.9\textheight]{figures/flowchart.pdf}
+\end{frame}
+
+\begin{frame}{框架结构有限元范式}
+    本项目将采用\textbf{Timoshenko梁假设}的有限元分析方法。
+
+    \vspace{16pt}
+
+{\centering
+\begin{tikzpicture}[remember picture]
+    \node (week) [anchor=center,yshift=-0pt,xshift=-0pt] at (0,0) {
+        $\displaystyle \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx = ??$
+    };
+    \node<1> (discrete) [align=center] at (0,-1.5) {求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = \boldsymbol f$};
+    \node<2> (discrete) [align=center] at (0,-1.5) {求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = {\color{red}\boldsymbol f}$};
+    \node (force) [align=center] at (0,-2.5) {求解等效轴力、弯矩、剪力（$N, M, V$）};
+    \node (approximation) [align=center] at (-5.5,2) {节点信息输入\\（$u,v,w,\phi_1,\phi_2,\phi_3$）};
+    \node (integration) [align=center] at (0,2) {缩减积分方案};
+    \node<1> (boundary) [align=center] at (5.5,2) {等效外荷载与位移边界 \\（$\bar N, \bar M, \bar V, \bar b, \bar q$)};
+    \node<2> (boundary) [align=center] at (5.5,2) {\alert{等效外荷载与位移边界} \\ \alert{（$\bar N, \bar M, \bar V, \bar b, \bar q$)}};
+    \draw[-{Latex}] (week) -- (discrete);
+    \draw[-{Latex}] (approximation) to[bend left] (-2,0.5);
+    \draw[-{Latex}] (integration) -- (week);
+    \draw[-{Latex}] (boundary) to[bend right] (2,0.5);
+    \draw[-{Latex}] (discrete) -- (force);
+\end{tikzpicture}}
+\end{frame}
+
+\begin{frame}{等效外荷载与位移边界}
+\begin{columns}
+    \column{0.3\textwidth}
+        \begin{block}{永久荷载}
+            
+        \end{block}
+    \column{0.3\textwidth}
+        \begin{block}{可变荷载}
+            
+        \end{block}
+    \column{0.3\textwidth}
+        \begin{block}{偶然荷载}
+            
+        \end{block}
+\end{columns}
+
+\vspace{16pt}
+
+\begin{center}
+\begin{tikzpicture}[remember picture]
+    \node (external) [align=center] at (-5,0) {外荷载};
+    \node (residual) [align=center] at (0,0) {等效外荷载  ($\bar N, \bar M, \bar V, \bar b, \bar q$)};
+    \node (force) [align=center] at (5,0) {外力向量$f$};
+    \draw[-{Latex}] (external) to (residual);
+    \draw[-{Latex}] (residual) to (force);
+\end{tikzpicture}
+\end{center}
+
+\vspace{16pt}
+
+\textit{*参考规范}
+\end{frame}
+
+\begin{frame}{框架结构有限元范式}
+    本项目将采用\textbf{Timoshenko梁假设}的有限元分析方法。
+
+    \vspace{16pt}
+
+{\centering
+\begin{tikzpicture}[remember picture]
+    \node (week) [anchor=center,yshift=-0pt,xshift=-0pt] at (0,0) {
+        $\displaystyle \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx = ??$
+    };
+    \node (discrete) [align=center] at (0,-1.5) {\alert{求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = \boldsymbol f$}};
+    \node (force) [align=center] at (0,-2.5) {求解等效轴力、弯矩、剪力（$N, M, V$）};
+    \node (approximation) [align=center] at (-5.5,2) {节点信息输入\\（$u,v,w,\phi_1,\phi_2,\phi_3$）};
+    \node (integration) [align=center] at (0,2) {缩减积分方案};
+    \node (boundary) [align=center] at (5.5,2) {等效外荷载与位移边界 \\（$\bar N, \bar M, \bar V, \bar b, \bar q$)};
+    \draw[-{Latex}] (week) -- (discrete);
+    \draw[-{Latex}] (approximation) to[bend left] (-2,0.5);
+    \draw[-{Latex}] (integration) -- (week);
+    \draw[-{Latex}] (boundary) to[bend right] (2,0.5);
+    \draw[-{Latex}] (discrete) -- (force);
+\end{tikzpicture}}
+\end{frame}
+
+\begin{frame}{框架结构有限元分析测试与验证}
+
+\begin{columns}
+    \column{0.45\textwidth}
+        \begin{block}{理论模型}
+            
+        \end{block}
+    \column{0.45\textwidth}
+        \begin{block}{开源软件测试}
+            
+        \end{block}
+\end{columns}
+
+\vspace{16pt}
+
+\textit{*商用软件的底层代码未知，不推荐与商用软件进行核对。}
+
+
+\end{frame}
+
+\begin{frame}{规范校核方案}
+\begin{columns}
+    \column{0.3\textwidth}
+        \begin{block}{轴心收拉构件}
+            \centering
+            $\displaystyle \frac{\color{red} N}{A_n}\le f$
+        \end{block}
+    \column{0.3\textwidth}
+        \begin{block}{轴心受压构件}
+            \centering
+            $\displaystyle \frac{\color{red} N}{A_{en}}\le f,\quad \frac{\color{red} N}{\varphi A_e}\le f$
+        \end{block}
+    \column{0.3\textwidth}
+        \begin{exampleblock}{构件中的受压板件}
+            
+        \end{exampleblock}
+\end{columns}
+
+\end{frame}
+
