@@ -11,20 +11,29 @@
 
 {\centering
 \begin{tikzpicture}[remember picture]
-    \node (week) [anchor=center,yshift=-0pt,xshift=-0pt] at (0,0) {
-        $\displaystyle \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx = ??$
+    \node<1> (week) [anchor=center, yshift=-0pt, xshift=-0pt, align=center] at (0,0) {
+        \(\displaystyle \begin{gathered}
+            \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx \\
+            = \int_0^L (\delta u \cdot \bar{b} + \delta w \cdot \bar{q}) dx + \sum_{i=1}^2 (\delta u_i \cdot \bar{N}_i + \delta w_i \cdot \bar{V}_i + \delta \phi_i \cdot \bar{M}_i)
+        \end{gathered}\)
     };
-    \node<1> (discrete) [align=center] at (0,-1.5) {求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = \boldsymbol f$};
-    \node<2> (discrete) [align=center] at (0,-1.5) {求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = {\color{red}\boldsymbol f}$};
-    \node (force) [align=center] at (0,-2.5) {求解等效轴力、弯矩、剪力（$N, M, V$）};
+    \node<2> (week) [anchor=center, yshift=-0pt, xshift=-0pt, align=center] at (0,0) {
+        \(\displaystyle \begin{gathered}
+            \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx \\
+            = \textcolor{red}{\int_0^L (\delta u \cdot \bar{b} + \delta w \cdot \bar{q}) dx + \sum_{i=1}^2 (\delta u_i \cdot \bar{N}_i + \delta w_i \cdot \bar{V}_i + \delta \phi_i \cdot \bar{M}_i)}
+        \end{gathered}\)
+    };
+    \node<1> (discrete) [align=center] at (0,-2.2) {求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = \boldsymbol f$};
+    \node<2> (discrete) [align=center] at (0,-2.2) {求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = {\color{red}\boldsymbol f}$};
+    \node (force) [align=center] at (0,-3.2) {求解等效轴力、弯矩、剪力（$N, M, V$）};
     \node (approximation) [align=center] at (-5.5,2) {节点信息输入\\（$u,v,w,\phi_1,\phi_2,\phi_3$）};
     \node (integration) [align=center] at (0,2) {缩减积分方案};
     \node<1> (boundary) [align=center] at (5.5,2) {等效外荷载与位移边界 \\（$\bar N, \bar M, \bar V, \bar b, \bar q$)};
     \node<2> (boundary) [align=center] at (5.5,2) {\alert{等效外荷载与位移边界} \\ \alert{（$\bar N, \bar M, \bar V, \bar b, \bar q$)}};
     \draw[-{Latex}] (week) -- (discrete);
-    \draw[-{Latex}] (approximation) to[bend left] (-2,0.5);
+    \draw[-{Latex}] (approximation) to[bend left] (-2,1);
     \draw[-{Latex}] (integration) -- (week);
-    \draw[-{Latex}] (boundary) to[bend right] (2,0.5);
+    \draw[-{Latex}] (boundary) to[bend right] (2,1);
     \draw[-{Latex}] (discrete) -- (force);
 \end{tikzpicture}}
 \end{frame}
@@ -57,9 +66,16 @@
 \end{tikzpicture}
 \end{center}
 
-\vspace{16pt}
+\vspace{12pt}
 
-\textit{*参考规范}
+\begin{minipage}{0.88\textwidth}
+    \small
+    \textbf{规范荷载组合：}
+    依据《建筑结构荷载规范》GB 50009-2012，实际工程荷载需按 \textbf{永久、可变、偶然} 三类分别确定代表值（标准值 \(G_k/Q_k\)）。通过规范要求的组合规则（基本组合、标准组合等）得到最不利荷载效应设计值，作为结构验算的依据。
+
+    \vspace{4pt}
+    \textbf{有限元映射：}在得到组合的荷载设计值后，需根据虚功原理将其转化为有限元离散模型的边界条件。具体而言：面荷载（如风压、雪荷载等）转化为单元分布荷载 \(\bar{b}, \bar{q}\)；集中荷载（如吊车轮压、支座反力等）转化为等效节点力 \(\bar{N}, \bar{M}, \bar{V}\)，最终统一组装到整体刚度方程的荷载向量 \(\boldsymbol f\) 中。
+\end{minipage}
 \end{frame}
 
 \begin{frame}{框架结构有限元范式}
@@ -69,59 +85,128 @@
 
 {\centering
 \begin{tikzpicture}[remember picture]
-    \node (week) [anchor=center,yshift=-0pt,xshift=-0pt] at (0,0) {
-        $\displaystyle \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx = ??$
+    \node (week) [anchor=center, yshift=-0pt, xshift=-0pt, align=center] at (0,0) {
+         \(\displaystyle \begin{gathered}
+            \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx \\
+            = \textcolor{red}{\int_0^L (\delta u \cdot \bar{b} + \delta w \cdot \bar{q}) dx + \sum_{i=1}^2 (\delta u_i \cdot \bar{N}_i + \delta w_i \cdot \bar{V}_i + \delta \phi_i \cdot \bar{M}_i)}
+        \end{gathered}\)
     };
-    \node (discrete) [align=center] at (0,-1.5) {\alert{求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = \boldsymbol f$}};
-    \node (force) [align=center] at (0,-2.5) {求解等效轴力、弯矩、剪力（$N, M, V$）};
-    \node (approximation) [align=center] at (-5.5,2) {节点信息输入\\（$u,v,w,\phi_1,\phi_2,\phi_3$）};
+    \node (discrete) [align=center] at (0,-2.2) {求解离散控制方程 $\displaystyle \boldsymbol K \boldsymbol d = \textcolor{red}{\boldsymbol f}$};
+    \node (force) [align=center] at (0,-3.2) {求解等效轴力、弯矩、剪力（$N, M, V$）};
+    \node (approximation) [align=center] at (-5.5,2) {节点信息输入\\（\(u,v,w,\phi_1,\phi_2,\phi_3\)）};
     \node (integration) [align=center] at (0,2) {缩减积分方案};
-    \node (boundary) [align=center] at (5.5,2) {等效外荷载与位移边界 \\（$\bar N, \bar M, \bar V, \bar b, \bar q$)};
+    \node (boundary) [align=center] at (5.5,2) {\textcolor{red}{等效外荷载与位移边界} \\ \textcolor{red}{（\(\bar N, \bar M, \bar V, \bar b, \bar q\)）}};
     \draw[-{Latex}] (week) -- (discrete);
-    \draw[-{Latex}] (approximation) to[bend left] (-2,0.5);
+    \draw[-{Latex}] (approximation) to[bend left] (-2,1);
     \draw[-{Latex}] (integration) -- (week);
-    \draw[-{Latex}] (boundary) to[bend right] (2,0.5);
+    \draw[-{Latex}] (boundary) to[bend right] (2,1);
     \draw[-{Latex}] (discrete) -- (force);
 \end{tikzpicture}}
 \end{frame}
 
 \begin{frame}{框架结构有限元分析测试与验证}
 
-\begin{columns}
-    \column{0.45\textwidth}
+\begin{columns}[T] % [T] 参数保证文字顶部对齐
+    \column{0.48\textwidth}
         \begin{block}{理论模型}
-            
+            \small
+            依据 \textbf{Timoshenko 梁理论}，针对典型受力工况（如悬臂梁、简支梁受集中力/均布荷载等），推导其理论\textbf{精确解表达式}作为比对基准。
+            \vspace{-6pt}
+
+            将本模块开发的\textbf{免自锁梁单元}数值解与理论精确解进行逐点比对，全面验证其在挠度、转角及内力分布上的\textbf{力学一致性}，确保剪切变形效应得到精确模拟。
         \end{block}
-    \column{0.45\textwidth}
+        
+    \column{0.48\textwidth}
         \begin{block}{开源软件测试}
+            \small
+            基于课题组研发的开源程序 \textbf{ApproxOperator.jl} 开展算法验证。
+            \vspace{6pt}
             
+            通过标准的\textbf{分片试验（Patch Test）}，验证单元在常应变/常应力状态下的无自锁性与计算精确性；同时针对不同网格密度（h-refinement）开展\textbf{误差收敛分析}实验，系统评估计算精度与收敛效率。
         \end{block}
 \end{columns}
 
 \vspace{16pt}
 
-\textit{*商用软件的底层代码未知，不推荐与商用软件进行核对。}
-
+\textit{* 商用软件的底层代码未知，无法针对性解耦与二次开发，因此不推荐与商用软件进行比对作为模块的核心验证依据。}
 
 \end{frame}
 
 \begin{frame}{规范校核方案}
-\begin{columns}
-    \column{0.3\textwidth}
-        \begin{block}{轴心收拉构件}
+\begin{columns}[T] % [T] 让顶部对齐
+    \column{0.32\textwidth}
+        \begin{block}{轴心受拉构件}
             \centering
-            $\displaystyle \frac{\color{red} N}{A_n}\le f$
+            \scriptsize
+            \vspace{2pt}
+            依据 GB50018 第 5.1.1 条：\\
+            \vspace{4pt}
+            \(\displaystyle \sigma = \frac{\textcolor{red}{N}}{A_n}\le f\)
+            \vspace{4pt}
         \end{block}
-    \column{0.3\textwidth}
+        
+    \column{0.32\textwidth}
         \begin{block}{轴心受压构件}
             \centering
-            $\displaystyle \frac{\color{red} N}{A_{en}}\le f,\quad \frac{\color{red} N}{\varphi A_e}\le f$
+            \scriptsize
+            \vspace{2pt}
+            依据 GB50018 第 5.2.1、5.2.2 条：\\
+            \vspace{4pt}
+            \(\displaystyle \frac{\textcolor{red}{N}}{A_{en}}\le f, \quad \frac{\textcolor{red}{N}}{\varphi A_e}\le f\)
+            \vspace{4pt}
         \end{block}
-    \column{0.3\textwidth}
-        \begin{exampleblock}{构件中的受压板件}
+        
+    \column{0.32\textwidth}
+        \begin{block}{受弯构件}
+            \centering
+            \scriptsize
+            \vspace{2pt}
+            依据 GB50018 第 5.3.1 条：\\
+            \vspace{2pt}
             
-        \end{exampleblock}
+            \(\displaystyle \sigma = \frac{\textcolor{red}{M}}{W_{enx}}\le f,\) \\[1em]
+            \(\displaystyle \tau = \frac{\textcolor{red}{V}S}{It}\le f_v\) \\[1em]
+            \(\displaystyle \frac{\textcolor{red}{M}}{\varphi_{bx}W_{ex}}\le f\)
+            \vspace{2pt}
+        \end{block}
 \end{columns}
-
 \end{frame}
 
+\begin{frame}{规范校核方案}
+\begin{columns}[T]
+    \column{0.48\textwidth}
+        \begin{block}{拉弯构件}
+            \centering
+            \scriptsize
+            依据 GB50018 第 5.4.1 条：\\
+            \vspace{4pt}
+            \(\displaystyle \sigma = \frac{\textcolor{red}{N}}{A_n}\pm \frac{\textcolor{red}{M_x}}{W_{nx}}\pm \frac{\textcolor{red}{M_y}}{W_{ny}}\le f\)
+            \vspace{4pt}
+        \end{block}
+        
+    \column{0.48\textwidth}
+        \begin{block}{压弯构件}
+            \centering
+            \scriptsize
+            依据 GB50018 第 5.5.1、5.5.2 条：\\
+            \vspace{2pt}
+            \(\displaystyle \sigma = \frac{\textcolor{red}{N}}{A_{en}} + \frac{\textcolor{red}{M_x}}{W_{enx}} + \frac{\textcolor{red}{M_y}}{W_{eny}}\le f\) \\
+            \vspace{2pt}
+            \(\displaystyle \frac{\textcolor{red}{N}}{\varphi A_e} + \frac{\beta_m \textcolor{red}{M_x}}{(1 - \frac{N}{N_E'}\varphi) W_{ex}}\le f\)
+            \vspace{2pt}
+        \end{block}
+\end{columns}
+
+\vspace{6pt}
+
+\begin{columns}[T]
+    \column{\textwidth}
+        \begin{exampleblock}{构件中的受压板件}
+            \raggedright
+            \scriptsize
+            依据 GB50018 第 5.6 节，通过构件截面的板件宽厚比 \(b/t\)、稳定系数 \(k\) 及板组约束系数 \(k_1\) 等几何与力学特征进行有效截面属性校核。\\
+            \vspace{4pt}
+            \textbf{注：} 与前几项不同，该项验算属于截面自身的局部屈曲特征校核，可以\textbf{不依赖于有限元程序输出的广义内力（即 \(\textcolor{red}{N, M, V}\)等）}。
+        \end{exampleblock}
+\end{columns}
+\end{frame}
