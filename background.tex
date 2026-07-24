@@ -2,6 +2,57 @@
 
 \begin{frame}{薄壳结构控制方程}
 
-\textbf{Kirchhoff假设下的应变}
+\begin{columns}
+    \column{0.45\textwidth}
+        \textbf{壳体中面应变与曲率}
+        \begin{equation*}
+            \begin{aligned}
+                \epsilon_{\alpha\beta} &= \frac{1}{2}(\boldsymbol a_\alpha \cdot \boldsymbol v_{,\beta} + \boldsymbol v_{,\alpha}\cdot \boldsymbol a_\beta) \\ 
+                &= \varepsilon_{\alpha\beta} + \kappa_{\alpha\beta}\xi^3 \\
+            \end{aligned}
+        \end{equation*}
+        \textbf{Kirchhoff假设}
+        \begin{equation*}
+            \epsilon_{3i} = 0 \Rightarrow
+            \Rightarrow \boldsymbol \theta = - \boldsymbol v_{,\alpha} \cdot \boldsymbol a_3 \boldsymbol a^\alpha
+        \end{equation*}
+        \vspace{-25pt}
+        \begin{center}
+            \tikz{\node[
+                single arrow, draw,
+                fill=MediumBlue,
+                minimum width=0.1cm,
+                minimum height=0.7cm,
+                single arrow head extend=0.2cm,
+                % single arrow tip angle=60,
+                shape border rotate=270,
+            ] {};}
+        \end{center}
+        \vspace{-15pt}
+        \textbf{薄壳结构曲率}
+        \begin{align*}
+            \varepsilon_{\alpha\beta} &= \frac{1}{2}(\boldsymbol a_\alpha \cdot \boldsymbol v_{,\beta} + \boldsymbol v_{,\alpha}\cdot \boldsymbol a_\beta) \\
+            \kappa_{\alpha\beta} &= (\Gamma^\gamma_{\alpha\beta}\boldsymbol v_{,\gamma} - \alert{\boldsymbol v_{,\alpha\beta}}) \cdot \boldsymbol a_3 = - \boldsymbol v_{,\alpha}\vert_\beta \cdot \boldsymbol a_3
+        \end{align*}
+
+
+    \column{0.5\textwidth}
+        \begin{figure}
+            \includegraphics[width=\textwidth]{figures/1.png}
+            \caption{薄壳结构中面}
+        \end{figure}
+        \begin{tcolorbox}[colback=red!5, colframe=red!75!black,left=5pt,right=5pt]
+            薄壳结构分析曲率近似需要高阶形函数
+        \end{tcolorbox}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{再生核无网格近似}
+\begin{columns}
+    \column{0.45\textwidth}
+        \textbf{位移近似}
+    \column{0.45\textwidth}
+\end{columns}
 
 \end{frame}

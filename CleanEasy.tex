@@ -21,12 +21,14 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning, shapes, arrows, calc, decorations.pathreplacing, arrows.meta, backgrounds, patterns, overlay-beamer-styles}
 \usepackage{etoolbox}
+\usepackage{tcolorbox}
 \usepackage{animate}
 \usepackage{xeCJK}
 \setCJKmainfont{SourceHanSansSC-Regular.otf}[Path=./font/, BoldFont=SourceHanSansSC-Bold.otf, AutoFakeSlant]
 \setCJKsansfont{SourceHanSansSC-Regular.otf}[Path=./font/, BoldFont=SourceHanSansSC-Bold.otf, AutoFakeSlant]
 \usepackage{caption}
 \captionsetup[table]{labelformat=empty}
+\captionsetup[figure]{labelformat=empty}
 
 \AtBeginSection{}
 %----------------------------------------------------------------------------------------
@@ -58,5 +60,27 @@
 \begin{frame}{结论}
 
 \end{frame}
+
+\begin{frame}[plain]
+
+    \centering
+    \includegraphics[height=2cm]{logos/logo1.pdf}
+    \quad
+    \includegraphics[height=2cm]{logos/logo2.pdf}
+
+    \vspace{1cm}
+
+    \centering
+    \Huge \textbf{谢谢!}
+  
+    % \vspace{1cm}
+    % \normalsize
+    % \href{mailto:@email.com}{jcwu@hqu.edu.cn}
+  
+    % \vspace{0.5cm}
+    % \small
+    % \texttt{https://someurl.com}
+\end{frame}
+
 
 \end{document}
