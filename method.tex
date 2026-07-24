@@ -14,13 +14,13 @@
     \node<1> (week) [anchor=center, yshift=-0pt, xshift=-0pt, align=center] at (0,0) {
         \(\displaystyle \begin{gathered}
             \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx \\
-            = \int_0^L (\delta u \cdot \bar{b} + \delta w \cdot \bar{q}) dx + \sum_{i=1}^2 (\delta u_i \cdot \bar{N}_i + \delta w_i \cdot \bar{V}_i + \delta \phi_i \cdot \bar{M}_i)
+             = \int_0^L (\delta u \bar{b} + \delta w \bar{q}) dx + (\delta u \bar{N} + \delta w \bar{V} + \delta \phi \bar{M}) \Big|_0^L
         \end{gathered}\)
     };
     \node<2> (week) [anchor=center, yshift=-0pt, xshift=-0pt, align=center] at (0,0) {
         \(\displaystyle \begin{gathered}
             \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx \\
-            = \textcolor{red}{\int_0^L (\delta u \cdot \bar{b} + \delta w \cdot \bar{q}) dx + \sum_{i=1}^2 (\delta u_i \cdot \bar{N}_i + \delta w_i \cdot \bar{V}_i + \delta \phi_i \cdot \bar{M}_i)}
+            = \textcolor{red}{\int_0^L (\delta u \bar{b} + \delta w \bar{q}) dx + (\delta u \bar{N} + \delta w \bar{V} + \delta \phi \bar{M}) \Big|_0^L}
         \end{gathered}\)
     };
     \node<1> (discrete) [align=center] at (0,-2.2) {求解离散控制方程$\displaystyle \boldsymbol K \boldsymbol d = \boldsymbol f$};
@@ -39,18 +39,29 @@
 \end{frame}
 
 \begin{frame}{等效外荷载与位移边界}
-\begin{columns}
-    \column{0.3\textwidth}
+\begin{columns}[T] % [T] 使三个模块顶部对齐
+    \column{0.32\textwidth}
         \begin{block}{永久荷载}
-            
+            \small
+            \textbf{1.} 包括结构构件、围护构件、面层及装饰、固定设备、长期储物自重，土压力、水压力等。\\
+            \textbf{2.} 结构自重的标准值可按材料单位体积的自重计算确定。\\
+            \textbf{...}
         \end{block}
-    \column{0.3\textwidth}
+        
+    \column{0.32\textwidth}
         \begin{block}{可变荷载}
-            
+            \small
+            \textbf{1.} 包括楼面及屋面活荷载、吊车荷载、风荷载、雪荷载、温度作用等。\\
+            \textbf{2.} 需按设计基准期（50年）通过概率统计确定其代表值。\\
+            \textbf{...}
         \end{block}
-    \column{0.3\textwidth}
+        
+    \column{0.32\textwidth}
         \begin{block}{偶然荷载}
-            
+            \small
+            \textbf{1.} 包括爆炸力、撞击力等偶然作用。\\
+            \textbf{2.} 在设计使用年限内不一定出现，但一旦出现，其量值很大且持续时间很短。\\
+            \textbf{...}
         \end{block}
 \end{columns}
 
@@ -68,14 +79,7 @@
 
 \vspace{12pt}
 
-\begin{minipage}{0.88\textwidth}
-    \small
-    \textbf{规范荷载组合：}
-    依据《建筑结构荷载规范》GB 50009-2012，实际工程荷载需按 \textbf{永久、可变、偶然} 三类分别确定代表值（标准值 \(G_k/Q_k\)）。通过规范要求的组合规则（基本组合、标准组合等）得到最不利荷载效应设计值，作为结构验算的依据。
-
-    \vspace{4pt}
-    \textbf{有限元映射：}在得到组合的荷载设计值后，需根据虚功原理将其转化为有限元离散模型的边界条件。具体而言：面荷载（如风压、雪荷载等）转化为单元分布荷载 \(\bar{b}, \bar{q}\)；集中荷载（如吊车轮压、支座反力等）转化为等效节点力 \(\bar{N}, \bar{M}, \bar{V}\)，最终统一组装到整体刚度方程的荷载向量 \(\boldsymbol f\) 中。
-\end{minipage}
+\textit{\footnotesize* 参考《建筑结构荷载规范》GB 50009-2012。}
 \end{frame}
 
 \begin{frame}{框架结构有限元范式}
@@ -88,7 +92,7 @@
     \node (week) [anchor=center, yshift=-0pt, xshift=-0pt, align=center] at (0,0) {
          \(\displaystyle \begin{gathered}
             \int_0^L \delta \varepsilon N dx + \int_0^L \delta \kappa M dx + \int_0^L \delta \gamma V dx \\
-            = \textcolor{red}{\int_0^L (\delta u \cdot \bar{b} + \delta w \cdot \bar{q}) dx + \sum_{i=1}^2 (\delta u_i \cdot \bar{N}_i + \delta w_i \cdot \bar{V}_i + \delta \phi_i \cdot \bar{M}_i)}
+            = \textcolor{red}{\int_0^L (\delta u \bar{b} + \delta w \bar{q}) dx + (\delta u \bar{N} + \delta w \bar{V} + \delta \phi \bar{M}) \Big|_0^L}
         \end{gathered}\)
     };
     \node (discrete) [align=center] at (0,-2.2) {求解离散控制方程 $\displaystyle \boldsymbol K \boldsymbol d = \textcolor{red}{\boldsymbol f}$};
@@ -106,107 +110,113 @@
 
 \begin{frame}{框架结构有限元分析测试与验证}
 
-\begin{columns}[T] % [T] 参数保证文字顶部对齐
+\begin{columns}[T] % [T] 保证顶部对齐
     \column{0.48\textwidth}
         \begin{block}{理论模型}
-            \small
-            依据 \textbf{Timoshenko 梁理论}，针对典型受力工况（如悬臂梁、简支梁受集中力/均布荷载等），推导其理论\textbf{精确解表达式}作为比对基准。
-            \vspace{-6pt}
-
-            将本模块开发的\textbf{免自锁梁单元}数值解与理论精确解进行逐点比对，全面验证其在挠度、转角及内力分布上的\textbf{力学一致性}，确保剪切变形效应得到精确模拟。
+            \vspace{-0.2cm} % 去除模块顶部的多余留白
+            \centering
+            \begin{tikzpicture}[node distance=0.6cm, >=latex]
+                % 将最小高度缩小为 1.3cm，大幅缩短块头
+                \tikzset{stepnode/.style={align=center, font=\scriptsize\bfseries, text width=3.8cm, minimum height=1.3cm}}
+                
+                \node[stepnode] (step1) {1. 依据 Timoshenko 梁理论};
+                \node[stepnode, below=of step1] (step2) {2. 推导精确解表达式};
+                \node[stepnode, below=of step2] (step3) {3. 校核精确解与数值解的位移};
+                
+                \draw[->, thick, draw=black!70] (step1) -- (step2);
+                \draw[->, thick, draw=black!70] (step2) -- (step3);
+            \end{tikzpicture}
+            \vspace{-0.2cm} % 去除模块底部的多余留白
         \end{block}
         
     \column{0.48\textwidth}
         \begin{block}{开源软件测试}
-            \small
-            基于课题组研发的开源程序 \textbf{ApproxOperator.jl} 开展算法验证。
-            \vspace{6pt}
-            
-            通过标准的\textbf{分片试验（Patch Test）}，验证单元在常应变/常应力状态下的无自锁性与计算精确性；同时针对不同网格密度（h-refinement）开展\textbf{误差收敛分析}实验，系统评估计算精度与收敛效率。
+            \vspace{-0.2cm} % 同上
+            \centering
+            \begin{tikzpicture}[node distance=0.6cm, >=latex]
+                % 应用完全相同的节点样式保证物理高度对齐
+                \tikzset{stepnode/.style={align=center, font=\scriptsize\bfseries, text width=3.8cm, minimum height=1.3cm}}
+                
+                \node[stepnode] (step1) {1. 设计分片实验 (Patch Test)};
+                \node[stepnode, below=of step1] (step2) {2. 基于 \texttt{ApproxOperator.jl}\\ 进行数值求解};
+                \node[stepnode, below=of step2] (step3) {3. 校核能量误差与\\ 位移误差 (\(L^2, H^1\)误差)};
+                
+                \draw[->, thick, draw=black!70] (step1) -- (step2);
+                \draw[->, thick, draw=black!70] (step2) -- (step3);
+            \end{tikzpicture}
+            \vspace{-0.2cm}
         \end{block}
 \end{columns}
 
-\vspace{16pt}
+\vspace{8pt}
 
-\textit{* 商用软件的底层代码未知，无法针对性解耦与二次开发，因此不推荐与商用软件进行比对作为模块的核心验证依据。}
+\textit{\footnotesize* 商用软件的底层代码未知，无法针对性解耦与二次开发，因此不推荐与商用软件进行比对作为模块的核心验证依据。}
 
 \end{frame}
 
 \begin{frame}{规范校核方案}
-\begin{columns}[T] % [T] 让顶部对齐
-    \column{0.32\textwidth}
-        \begin{block}{轴心受拉构件}
-            \centering
-            \scriptsize
-            \vspace{2pt}
-            依据 GB50018 第 5.1.1 条：\\
-            \vspace{4pt}
-            \(\displaystyle \sigma = \frac{\textcolor{red}{N}}{A_n}\le f\)
-            \vspace{4pt}
-        \end{block}
-        
-    \column{0.32\textwidth}
-        \begin{block}{轴心受压构件}
-            \centering
-            \scriptsize
-            \vspace{2pt}
-            依据 GB50018 第 5.2.1、5.2.2 条：\\
-            \vspace{4pt}
-            \(\displaystyle \frac{\textcolor{red}{N}}{A_{en}}\le f, \quad \frac{\textcolor{red}{N}}{\varphi A_e}\le f\)
-            \vspace{4pt}
-        \end{block}
-        
-    \column{0.32\textwidth}
-        \begin{block}{受弯构件}
-            \centering
-            \scriptsize
-            \vspace{2pt}
-            依据 GB50018 第 5.3.1 条：\\
-            \vspace{2pt}
-            
-            \(\displaystyle \sigma = \frac{\textcolor{red}{M}}{W_{enx}}\le f,\) \\[1em]
-            \(\displaystyle \tau = \frac{\textcolor{red}{V}S}{It}\le f_v\) \\[1em]
-            \(\displaystyle \frac{\textcolor{red}{M}}{\varphi_{bx}W_{ex}}\le f\)
-            \vspace{2pt}
-        \end{block}
-\end{columns}
-\end{frame}
-
-\begin{frame}{规范校核方案}
+% --- 第一行：3 个构件 ---
+% 调整列宽：前两个窄一些，第三个宽一些
 \begin{columns}[T]
-    \column{0.48\textwidth}
-        \begin{block}{拉弯构件}
-            \centering
-            \scriptsize
-            依据 GB50018 第 5.4.1 条：\\
+    \column{0.22\textwidth}
+        \begin{block}{轴心受拉构件}
+            \centering \scriptsize
             \vspace{4pt}
-            \(\displaystyle \sigma = \frac{\textcolor{red}{N}}{A_n}\pm \frac{\textcolor{red}{M_x}}{W_{nx}}\pm \frac{\textcolor{red}{M_y}}{W_{ny}}\le f\)
-            \vspace{4pt}
+            \(\displaystyle \frac{\textcolor{red}{N}}{A_n} \le f\)
+            \vspace{4pt} % 手动撑开高度，与其他长块平齐
         \end{block}
         
-    \column{0.48\textwidth}
-        \begin{block}{压弯构件}
-            \centering
-            \scriptsize
-            依据 GB50018 第 5.5.1、5.5.2 条：\\
-            \vspace{2pt}
-            \(\displaystyle \sigma = \frac{\textcolor{red}{N}}{A_{en}} + \frac{\textcolor{red}{M_x}}{W_{enx}} + \frac{\textcolor{red}{M_y}}{W_{eny}}\le f\) \\
-            \vspace{2pt}
-            \(\displaystyle \frac{\textcolor{red}{N}}{\varphi A_e} + \frac{\beta_m \textcolor{red}{M_x}}{(1 - \frac{N}{N_E'}\varphi) W_{ex}}\le f\)
-            \vspace{2pt}
+    \column{0.26\textwidth}
+        \begin{block}{轴心受压构件}
+            \centering \scriptsize
+            \vspace{4pt}
+            \(\displaystyle \frac{\textcolor{red}{N}}{A_{en}} \le f, \quad \frac{\textcolor{red}{N}}{\varphi A_e} \le f\)
+            \vspace{4pt} % 手动撑开高度
+        \end{block}
+        
+    \column{0.42\textwidth}
+        \begin{block}{受弯构件}
+            \centering \scriptsize
+            \vspace{4pt}
+            \(\displaystyle \frac{\textcolor{red}{M}}{W_{enx}} \le f, \ \frac{\textcolor{red}{V}S}{It} \le f_v, \ \frac{\textcolor{red}{M}}{\varphi_{bx} W_{ex}} \le f\)
+            \vspace{4pt}
         \end{block}
 \end{columns}
 
 \vspace{6pt}
 
+% --- 第二行：3 个构件 ---
 \begin{columns}[T]
-    \column{\textwidth}
-        \begin{exampleblock}{构件中的受压板件}
-            \raggedright
-            \scriptsize
-            依据 GB50018 第 5.6 节，通过构件截面的板件宽厚比 \(b/t\)、稳定系数 \(k\) 及板组约束系数 \(k_1\) 等几何与力学特征进行有效截面属性校核。\\
+    \column{0.22\textwidth}
+        \begin{block}{拉弯构件}
+            \centering \scriptsize
             \vspace{4pt}
-            \textbf{注：} 与前几项不同，该项验算属于截面自身的局部屈曲特征校核，可以\textbf{不依赖于有限元程序输出的广义内力（即 \(\textcolor{red}{N, M, V}\)等）}。
-        \end{exampleblock}
+            \(\displaystyle \frac{\textcolor{red}{N}}{A_n} \pm \frac{\textcolor{red}{M_x}}{W_{nx}} \pm \frac{\textcolor{red}{M_y}}{W_{ny}} \le f\)
+            \vspace{1.2cm} 
+        \end{block}
+        
+    \column{0.26\textwidth}
+        \begin{block}{压弯构件}
+            \centering \scriptsize
+            \vspace{2pt}
+            \(\displaystyle \begin{aligned} \frac{\textcolor{red}{N}}{A_{en}} + \frac{\textcolor{red}{M_x}}{W_{enx}} + \frac{\textcolor{red}{M_y}}{W_{eny}} &\le f \\[0.6em] \frac{\textcolor{red}{N}}{\varphi A_e} + \frac{\beta_m \textcolor{red}{M_x}}{(1 - \frac{N}{N_E'}\varphi) W_{ex}} &\le f \end{aligned}\)
+            \vspace{4pt}
+        \end{block}
+        
+    \column{0.42\textwidth}
+        \begin{block}{构件中的受压板件}
+            \centering \scriptsize
+            \vspace{2pt}
+            \(\displaystyle 
+            \begin{cases}
+            \frac{b_c}{t}, & b/t \le 18\alpha\rho \\[0.4em]
+            \left(\sqrt{\frac{21.8\alpha\rho}{b/t}} - 0.1\right)\frac{b_c}{t}, & 18\alpha\rho < b/t < 38\alpha\rho \\[0.4em]
+            \frac{25\alpha\rho}{b/t} \cdot \frac{b_c}{t}, & b/t \ge 38\alpha\rho
+            \end{cases}\)
+            \vspace{8pt}
+        \end{block}
 \end{columns}
+
+\vspace{6pt}
+\textit{\footnotesize*参考《冷弯薄壁型钢结构技术规范》GB50018-2002。 }
 \end{frame}

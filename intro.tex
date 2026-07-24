@@ -1,51 +1,35 @@
 \section{项目需求}
 \begin{frame}{项目需求}
     \centering
-    % --- 流程图部分 ---
-    \begin{tikzpicture}[>=latex, node distance=2.2cm]
-        \tikzset{
-            commonbox/.style={
-                align=center, 
-                minimum width=3.2cm, 
-                minimum height=1.4cm, 
-                rounded corners=5pt, 
-                font=\large,
-                inner sep=8pt
-            },
-            normalbox/.style={
-                commonbox, 
-                draw=gray!70, 
-                thick, 
-                fill=white
-            },
-            redbox/.style={
-                commonbox, 
-                draw=red!80!black, 
-                line width=2.5pt, 
-                fill=red!10, 
-                text=red!80!black, 
-                font=\large\bfseries
-            }
-        }
-        \node[normalbox] (design) {建筑设计};
-        \node[redbox, right=of design] (fea) {有限元分析};
-        \node[normalbox, right=of fea] (code) {规范校核};
-        \draw[->, thick, draw=black] (design) -- (fea);
-        \draw[->, thick, draw=black] (fea) -- (code);
+    
+    \begin{tikzpicture}
+        \node[inner sep=0pt] (d) at (-5.5,0) {\includegraphics[height=3.2cm, keepaspectratio]{figures/design.png}};
+        \node[inner sep=0pt] (f) at (0,0)  {\includegraphics[height=3.2cm, keepaspectratio]{figures/FEM.png}};
+        \node[inner sep=0pt] (s) at (5,0)  {\includegraphics[height=3.2cm, keepaspectratio]{figures/standard.png}};
+
+    
+        \node[below=0.25cm of d, align=center] {\large\textbf{建筑设计}};
+        \node[below=0.25cm of f, align=center] {\large\textbf{\textcolor{red}{有限元分析}}}; % 标红
+        \node[below=0.25cm of s, align=center] {\large\textbf{规范校核}};
+
+       
+        \draw[->, thick, shorten <=0.4cm, shorten >=0.4cm] (d.east) -- (f.west);
+        \draw[->, thick, shorten <=0.4cm, shorten >=0.4cm] (f.east) -- (s.west);
     \end{tikzpicture}
 
-    \vspace{0.8cm} % 流程图与下方文字的间距
+    \vspace{0.4cm} 
 
-    % --- 精简后的难点与痛点部分 ---
-    \begin{minipage}{0.85\textwidth}
+
+    \begin{minipage}{0.9\textwidth}
         \setlength{\parskip}{0.2em}
         \small
-        \textbf{工程应用痛点：}尽管学术理论成熟，但冷弯薄壁型钢的工程实践仍面临两大瓶颈：
+        \textbf{工程应用痛点：}
         
         \vspace{0.05cm}
         \begin{itemize}
-            \item \textbf{截面与规范脱节：} 通用软件缺少国内相关规范（如 GB 50018）的接口，设计人员仅能人工后处理校核，易错且低效。
-            \item \textbf{数据孤岛：} 设计、分析、生产系统间无统一数据接口，设计变更时需频繁人工转换，严重制约设计-制造协同效率。
+            \setlength{\itemsep}{0.2em} % 列表项目间距
+            \item \textbf{软件与规范脱节：} 通用软件缺少国内相关规范的接口。
+            \item \textbf{数据孤岛：} 建筑设计、有限元分析、规范校核整体过程中缺少一体化程序。
         \end{itemize}
     \end{minipage}
 \end{frame}
