@@ -40,28 +40,31 @@
 
 \begin{frame}{等效外荷载与位移边界}
 \begin{columns}[T] % [T] 使三个模块顶部对齐
-    \column{0.32\textwidth}
+    \column{0.26\textwidth}
         \begin{block}{永久荷载}
-            \small
-            \textbf{1.} 包括结构构件、围护构件、面层及装饰、固定设备、长期储物自重，土压力、水压力等。\\
-            \textbf{2.} 结构自重的标准值可按材料单位体积的自重计算确定。\\
+            \small\raggedright
+            1. 结构构件自重\\
+            2. 土压力\\
+            3. 水压力\\
             \textbf{...}
         \end{block}
         
-    \column{0.32\textwidth}
+    \column{0.26\textwidth}
         \begin{block}{可变荷载}
-            \small
-            \textbf{1.} 包括楼面及屋面活荷载、吊车荷载、风荷载、雪荷载、温度作用等。\\
-            \textbf{2.} 需按设计基准期（50年）通过概率统计确定其代表值。\\
+            \small\raggedright
+            1. 楼面及屋面活荷载\\
+            2. 吊车荷载\\
+            3. 风荷载\\
             \textbf{...}
         \end{block}
         
-    \column{0.32\textwidth}
+    \column{0.26\textwidth}
         \begin{block}{偶然荷载}
-            \small
-            \textbf{1.} 包括爆炸力、撞击力等偶然作用。\\
-            \textbf{2.} 在设计使用年限内不一定出现，但一旦出现，其量值很大且持续时间很短。\\
+            \small\raggedright
+            1. 爆炸力\\
+            2. 撞击力\\
             \textbf{...}
+            \vspace{0.45cm}
         \end{block}
 \end{columns}
 
@@ -111,13 +114,14 @@
 \begin{frame}{框架结构有限元分析测试与验证}
 
 \begin{columns}[T] % [T] 保证顶部对齐
-    \column{0.48\textwidth}
+    \column{0.36\textwidth}
         \begin{block}{理论模型}
             \vspace{-0.2cm} % 去除模块顶部的多余留白
             \centering
-            \begin{tikzpicture}[node distance=0.6cm, >=latex]
-                % 将最小高度缩小为 1.3cm，大幅缩短块头
-                \tikzset{stepnode/.style={align=center, font=\scriptsize\bfseries, text width=3.8cm, minimum height=1.3cm}}
+            % 核心调整 1：将 node distance 改为 0.8cm，使框与框之间的物理间隙紧凑
+            \begin{tikzpicture}[node distance=0.8cm, >=latex]
+                % 核心调整 2：minimum height=0.7cm 压低框高；inner ysep=2pt 缩小文字与边框的内边距
+                \tikzset{stepnode/.style={align=center, font=\scriptsize\bfseries, text width=3.8cm, minimum height=0.7cm, inner ysep=2pt}}
                 
                 \node[stepnode] (step1) {1. 依据 Timoshenko 梁理论};
                 \node[stepnode, below=of step1] (step2) {2. 推导精确解表达式};
@@ -126,16 +130,16 @@
                 \draw[->, thick, draw=black!70] (step1) -- (step2);
                 \draw[->, thick, draw=black!70] (step2) -- (step3);
             \end{tikzpicture}
-            \vspace{-0.2cm} % 去除模块底部的多余留白
+            \vspace{0.1cm} 
         \end{block}
         
-    \column{0.48\textwidth}
+    \column{0.36\textwidth}
         \begin{block}{开源软件测试}
             \vspace{-0.2cm} % 同上
             \centering
-            \begin{tikzpicture}[node distance=0.6cm, >=latex]
-                % 应用完全相同的节点样式保证物理高度对齐
-                \tikzset{stepnode/.style={align=center, font=\scriptsize\bfseries, text width=3.8cm, minimum height=1.3cm}}
+            % 应用完全相同的紧凑参数
+            \begin{tikzpicture}[node distance=0.8cm, >=latex]
+                \tikzset{stepnode/.style={align=center, font=\scriptsize\bfseries, text width=3.8cm, minimum height=0.7cm, inner ysep=2pt}}
                 
                 \node[stepnode] (step1) {1. 设计分片实验 (Patch Test)};
                 \node[stepnode, below=of step1] (step2) {2. 基于 \texttt{ApproxOperator.jl}\\ 进行数值求解};
@@ -144,10 +148,8 @@
                 \draw[->, thick, draw=black!70] (step1) -- (step2);
                 \draw[->, thick, draw=black!70] (step2) -- (step3);
             \end{tikzpicture}
-            \vspace{-0.2cm}
         \end{block}
 \end{columns}
-
 \vspace{8pt}
 
 \textit{\footnotesize* 商用软件的底层代码未知，无法针对性解耦与二次开发，因此不推荐与商用软件进行比对作为模块的核心验证依据。}
@@ -204,7 +206,7 @@
         \end{block}
         
     \column{0.42\textwidth}
-        \begin{block}{构件中的受压板件}
+        \begin{exampleblock}{构件中的受压板件}
             \centering \scriptsize
             \vspace{2pt}
             \(\displaystyle 
@@ -214,7 +216,7 @@
             \frac{25\alpha\rho}{b/t} \cdot \frac{b_c}{t}, & b/t \ge 38\alpha\rho
             \end{cases}\)
             \vspace{8pt}
-        \end{block}
+        \end{exampleblock}
 \end{columns}
 
 \vspace{6pt}
