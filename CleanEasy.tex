@@ -22,12 +22,14 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning, shapes, arrows, calc, decorations.pathreplacing, arrows.meta, backgrounds, patterns, overlay-beamer-styles}
 \usepackage{etoolbox}
+\usepackage{array,makecell}
 \usepackage{animate}
 \usepackage{xeCJK}
 \setCJKmainfont{SourceHanSansSC-Regular.otf}[Path=./font/, BoldFont=SourceHanSansSC-Bold.otf, AutoFakeSlant]
 \setCJKsansfont{SourceHanSansSC-Regular.otf}[Path=./font/, BoldFont=SourceHanSansSC-Bold.otf, AutoFakeSlant]
 \usepackage{caption}
 \captionsetup[table]{labelformat=empty}
+\captionsetup[figure]{labelformat=empty}
 
 \AtBeginSection{}
 % \tableofcontents[title=目录]
@@ -56,6 +58,46 @@
 \input{intro.tex}
 \input{method.tex}
 \input{project.tex}
+
+\begin{frame}[plain]
+    \centering
+    \Huge \textbf{谢谢!}
+  
+    \vspace{1cm}
+    \normalsize
+    \href{mailto:jcwu@hqu.edu.cn}{jcwu@hqu.edu.cn}
+  
+    \vspace{0.5cm}
+    \small
+    \texttt{https://faculty.hqu.edu.cn//wujc}
+\end{frame}
+
+\begin{frame}{相关研究}
+    \begin{columns}
+        \column{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.7\textwidth]{figures/ptc_r2.png}
+                \caption{曲壳屋顶问题}
+            \end{figure}
+        \column{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.7\textwidth]{figures/pfd_r1.png}
+                \caption{球壳问题}
+            \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{相关研究}
+    \tiny
+    \begin{itemize}
+        \item WU J, XU Y, XU B, Basha S. Quasi-consistent efficient meshfree thin shell formulation with naturally stabilized enforced essential boundary conditions[J]. Engineering Analysis with Boundary Elements, 2024, 163: 641-655.
+        \item DENG L, WU J, LIN Z. A unified accuracy assessment of meshfree collocation methods for Kirchhoff plate problems[J]. Engineering Analysis with Boundary Elements, 2025, 181: 106548.
+        \item WU J, WU X, ZHAO Y, WANG D. A rotation-free Hellinger-Reissner meshfree thin plate formulation naturally accommodating essential boundary conditions[J]. Engineering Analysis with Boundary Elements, 2023, 154: 122-140.
+        \item WANG D, WANG J, WU J. Arbitrary order recursive formulation of meshfree gradients with application to superconvergent collocation analysis of Kirchhoff plates[J]. Computational Mechanics, 2020, 65(3): 877-903.
+        \item ZHANG H, WU J, WANG D. Free vibration analysis of cracked thin plates by quasi-convex coupled isogeometric-meshfree method[J]. Journal of Contemporary Physics, 2015, 50(4): 405-419.
+    \end{itemize}
+\end{frame}
+
 
 
 \end{document}
