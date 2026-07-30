@@ -4,7 +4,27 @@
 
 \end{frame}
 
+\begin{frame}{基于Hellinger-Reissner变分一致型伽辽金无网格法}
+\begin{columns}
+    \column{0.35\textwidth}
+        \begin{figure}
+            \includegraphics[width=\textwidth]{figures/tri1.png}
+            \caption{\bfseries 简支三角形板问题}
+        \end{figure}
+    \column{0.6\textwidth}
+        \begin{figure}
+            \includegraphics[width=0.9\textwidth]{figures/tri2.png}
+            \caption{\bfseries\hspace{1cm}人工经验参数敏感性分析}
+        \end{figure}
+\end{columns}
+\end{frame}
+
 \begin{frame}{薄壳伽辽金法的变分一致性}
+
+    \begin{tcolorbox}[colframe=MediumBlue, colback=white]
+        假定位移为由基函数构成的多项式
+
+        \vspace{-10pt}
 
     \begin{center}
         \begin{tikzpicture}[remember picture]
@@ -19,11 +39,12 @@
                 single arrow head extend=0.2cm,
                 % single arrow tip angle=60,
                 shape border rotate=0,
-            ] at (2,0) {};
-            \node at (5,0) {
-                    $\begin{aligned}\varepsilon_{\alpha\beta} &= \frac{1}{2}(\alert{\boldsymbol a_\alpha} \cdot \boldsymbol u_{,\beta} + \boldsymbol u_{,\alpha}\cdot \alert{\boldsymbol a_\beta}) \\
-                    \kappa_{\alpha\beta} &= - \boldsymbol u_{,\alpha}\vert_\beta \cdot \alert{\boldsymbol a_3}
-                    \end{aligned}$
+            ] at (1.7,0) {};
+            \node at (4.7,0) {
+                    % $\begin{aligned}N^{\alpha\beta} &= hC^{\alpha\beta\gamma\eta}\frac{1}{2}(\alert{\boldsymbol a_\gamma} \cdot \boldsymbol u_{,\eta} + \boldsymbol u_{,\gamma}\cdot \alert{\boldsymbol a_\eta}) \\
+                    % M^{\alpha\beta} &= - \frac{h^3}{12}C^{\alpha\beta\gamma\eta}\boldsymbol u_{,\gamma}\vert_\eta \cdot \alert{\boldsymbol a_3}
+                    % \end{aligned}$
+                    $M^{\alpha\beta} = - \frac{h^3}{12}C^{\alpha\beta\gamma\eta}\boldsymbol u_{,\gamma}\vert_\eta \cdot \alert{\boldsymbol a_3}$
             };
             \node[
                 single arrow, draw,
@@ -33,15 +54,29 @@
                 single arrow head extend=0.2cm,
                 % single arrow tip angle=60,
                 shape border rotate=0,
-            ] at (8,0) {};
+            ] at (7.5,0) {};
+            \node at (10.2,0) {
+                % $\begin{aligned}
+                % \boldsymbol T_N &= \alert{\boldsymbol a_\alpha} N^{\alpha\beta}n_\beta \\
+                % \boldsymbol T_M &= (\alert{\boldsymbol a_3} M^{\alpha\beta}s_\alpha n_\beta)_{,\gamma} s^\gamma
+                % \end{aligned}$
+                $\boldsymbol T_M = (\alert{\boldsymbol a_3} M^{\alpha\beta}s_\alpha n_\beta)_{,\gamma} s^\gamma$
+            };
+            % \node at (7.8,1) {
+            %     \footnotesize $
+            %     N^{\alpha\beta} = hC^{\alpha\beta\gamma\eta}\varepsilon_{\gamma\eta}, \quad
+            %     M^{\alpha\beta} = \frac{h^3}{12}C^{\alpha\beta\gamma\eta}\kappa_{\gamma\eta}$
+            % };
             \node at (0,-1) {
                 多项式
             };
-            \node at (5,-1) {
+            \node at (4.5,-1) {
+                非多项式
+            };
+            \node at (10,-1) {
                 非多项式
             };
         \end{tikzpicture}
     \end{center}
-
-    1
+    \end{tcolorbox}
 \end{frame}
