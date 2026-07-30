@@ -6,4 +6,42 @@
 
 \begin{frame}{薄壳伽辽金法的变分一致性}
 
+    \begin{center}
+        \begin{tikzpicture}[remember picture]
+            \node at (0,0) {
+                    $\boldsymbol u(\boldsymbol \xi) = \boldsymbol p^T(\boldsymbol \xi)\boldsymbol a$
+            };
+            \node[
+                single arrow, draw,
+                fill=MediumBlue,
+                minimum width=0.1cm,
+                minimum height=0.7cm,
+                single arrow head extend=0.2cm,
+                % single arrow tip angle=60,
+                shape border rotate=0,
+            ] at (2,0) {};
+            \node at (5,0) {
+                    $\begin{aligned}\varepsilon_{\alpha\beta} &= \frac{1}{2}(\alert{\boldsymbol a_\alpha} \cdot \boldsymbol u_{,\beta} + \boldsymbol u_{,\alpha}\cdot \alert{\boldsymbol a_\beta}) \\
+                    \kappa_{\alpha\beta} &= - \boldsymbol u_{,\alpha}\vert_\beta \cdot \alert{\boldsymbol a_3}
+                    \end{aligned}$
+            };
+            \node[
+                single arrow, draw,
+                fill=MediumBlue,
+                minimum width=0.1cm,
+                minimum height=0.7cm,
+                single arrow head extend=0.2cm,
+                % single arrow tip angle=60,
+                shape border rotate=0,
+            ] at (8,0) {};
+            \node at (0,-1) {
+                多项式
+            };
+            \node at (5,-1) {
+                非多项式
+            };
+        \end{tikzpicture}
+    \end{center}
+
+    1
 \end{frame}
