@@ -39,7 +39,7 @@
     \column{0.5\textwidth}
         \begin{figure}
             \includegraphics[width=\textwidth]{figures/1.png}
-            \caption{薄壳结构中面}
+            \caption{\bfseries 薄壳结构中面}
         \end{figure}
         \begin{tcolorbox}[colback=red!5, colframe=red!75!black,left=5pt,right=5pt]
             \bfseries 薄壳结构分析曲率近似需要高阶形函数
@@ -60,10 +60,13 @@
         \end{equation*}
         \textbf{一致性条件}
         \begin{equation*}
-            \sum_{I=1}^{n_p} \Psi_I(\boldsymbol \xi)\boldsymbol p(\boldsymbol \xi_I) = \boldsymbol p(\boldsymbol \xi)
-            \Rightarrow
+            \begin{aligned}
+            &\sum_{I=1}^{n_p} \Psi_I(\boldsymbol \xi)\boldsymbol p(\boldsymbol \xi_I) = \boldsymbol p(\boldsymbol \xi) \\
+            \Rightarrow &
             \boldsymbol c(\boldsymbol \xi) = \boldsymbol A^{-1}(\boldsymbol \xi)\boldsymbol p(\boldsymbol 0)
+            \end{aligned}
         \end{equation*}
+        \textbf{无网格形函数}
         \begin{equation*}
             \Psi_I(\boldsymbol \xi) = \boldsymbol p^T(\boldsymbol \xi_I-\boldsymbol \xi) \boldsymbol A^{-1}(\boldsymbol \xi)\boldsymbol p(\boldsymbol 0)\phi(\boldsymbol \xi_I-\boldsymbol \xi)
         \end{equation*}

@@ -11,6 +11,18 @@
             \includegraphics[width=\textwidth]{figures/tri1.png}
             \caption{\bfseries 简支三角形板问题}
         \end{figure}
+
+        \begin{tcolorbox}[colback=white,colframe=MediumBlue]
+            \footnotesize
+            \linespread{0.5}\selectfont
+            \begin{tabular}{@{} l @{\quad} l @{}}
+                \textbf{抗弯刚度} & $D = 1.0$ \\[0.5em]
+                \textbf{泊松比}   & $\nu = 0.3$           \\[0.5em]
+                \textbf{荷载}     & $q = 1.0$
+            \end{tabular}
+        \end{tcolorbox}
+
+
     \column{0.6\textwidth}
         \begin{figure}
             \includegraphics[width=0.9\textwidth]{figures/tri2.png}
@@ -40,11 +52,12 @@
                 % single arrow tip angle=60,
                 shape border rotate=0,
             ] at (1.7,0) {};
-            \node at (4.7,0) {
+            \node at (5.2,0) {
                     % $\begin{aligned}N^{\alpha\beta} &= hC^{\alpha\beta\gamma\eta}\frac{1}{2}(\alert{\boldsymbol a_\gamma} \cdot \boldsymbol u_{,\eta} + \boldsymbol u_{,\gamma}\cdot \alert{\boldsymbol a_\eta}) \\
                     % M^{\alpha\beta} &= - \frac{h^3}{12}C^{\alpha\beta\gamma\eta}\boldsymbol u_{,\gamma}\vert_\eta \cdot \alert{\boldsymbol a_3}
                     % \end{aligned}$
-                    $M^{\alpha\beta} = - \frac{h^3}{12}C^{\alpha\beta\gamma\eta}\boldsymbol u_{,\gamma}\vert_\eta \cdot \alert{\boldsymbol a_3}$
+                    $N^{\alpha\beta} = hC^{\alpha\beta\gamma\eta}\frac{1}{2}(\alert{\boldsymbol a_\gamma} \cdot \boldsymbol u_{,\eta} + \boldsymbol u_{,\gamma}\cdot \alert{\boldsymbol a_\eta})$
+                    % $M^{\alpha\beta} = - \frac{h^3}{12}C^{\alpha\beta\gamma\eta}\boldsymbol u_{,\gamma}\vert_\eta \cdot \alert{\boldsymbol a_3}$
             };
             \node[
                 single arrow, draw,
@@ -54,29 +67,244 @@
                 single arrow head extend=0.2cm,
                 % single arrow tip angle=60,
                 shape border rotate=0,
-            ] at (7.5,0) {};
-            \node at (10.2,0) {
+            ] at (8.7,0) {};
+            \node at (10.6,0) {
                 % $\begin{aligned}
                 % \boldsymbol T_N &= \alert{\boldsymbol a_\alpha} N^{\alpha\beta}n_\beta \\
                 % \boldsymbol T_M &= (\alert{\boldsymbol a_3} M^{\alpha\beta}s_\alpha n_\beta)_{,\gamma} s^\gamma
                 % \end{aligned}$
-                $\boldsymbol T_M = (\alert{\boldsymbol a_3} M^{\alpha\beta}s_\alpha n_\beta)_{,\gamma} s^\gamma$
+                $\boldsymbol T_N = \alert{\boldsymbol a_\alpha} N^{\alpha\beta}n_\beta$
+                % $\boldsymbol T_M = (\alert{\boldsymbol a_3} M^{\alpha\beta}s_\alpha n_\beta)_{,\gamma} s^\gamma$
             };
             % \node at (7.8,1) {
             %     \footnotesize $
             %     N^{\alpha\beta} = hC^{\alpha\beta\gamma\eta}\varepsilon_{\gamma\eta}, \quad
             %     M^{\alpha\beta} = \frac{h^3}{12}C^{\alpha\beta\gamma\eta}\kappa_{\gamma\eta}$
             % };
-            \node at (0,-1) {
+            \node at (0,-0.8) {
                 多项式
             };
-            \node at (4.5,-1) {
+            \node at (4.5,-0.8) {
                 非多项式
             };
-            \node at (10,-1) {
+            \node at (10,-0.8) {
                 非多项式
             };
         \end{tikzpicture}
     \end{center}
     \end{tcolorbox}
+
+    \textbf{薄壳薄膜应变部分变分一致性条件}
+    \begin{equation*}
+        \int_\Omega \delta \varepsilon_{\alpha\beta} N^{\alpha\beta} d\Omega = \int_\Gamma \delta \boldsymbol u \cdot \boldsymbol T_N d\Gamma - \int_\Omega \delta \boldsymbol u \cdot \boldsymbol b_N d\Omega
+    \end{equation*}
+    \textbf{存在问题:}
+    \begin{itemize}
+        \item 位移为多项式，可能需要满足非多项式变分一致性条件。
+        \item 假设应力为多项式，变分一致性条件的右端也存在非线性项。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{薄壳问题的Hu-Washizu变分原理伽辽金弱形式}
+    \textbf{薄壳薄膜应变部分变分一致性条件}
+    \begin{equation*}
+        \int_\Omega \underbrace{\delta \varepsilon_{\alpha\beta} N^{\alpha\beta}}_{\displaystyle \frac{1}{2}({\color{red}\boldsymbol a_{\alpha} N^{\alpha\beta}} \cdot {\color{blue}\delta \boldsymbol u_{,\beta}} + {\color{blue}\delta \boldsymbol u_{,\alpha}} \cdot {\color{red}\boldsymbol a_\beta N^{\alpha\beta}})} d\Omega = \int_\Gamma \delta \boldsymbol u \cdot \underbrace{\boldsymbol T_N}_{\displaystyle {\color{red} \boldsymbol a_\alpha N^{\alpha\beta}} n_\beta} d\Gamma - \int_\Omega \delta \boldsymbol u \cdot \underbrace{\boldsymbol b_N}_{\displaystyle ({\color{red}\boldsymbol a_\alpha N^{\alpha\beta}})\vert_\beta} d\Omega
+    \end{equation*}
+
+    \vspace{-10pt}
+
+    \begin{itemize}
+    \item 假定应变:
+        $\displaystyle \boldsymbol u_{,\alpha}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol d_\alpha^{\varepsilon}
+        \qquad \quad \! \Rightarrow \quad
+        \varepsilon_{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi)\frac{1}{2}(\boldsymbol a_\alpha \cdot \boldsymbol d_\beta^\varepsilon + \boldsymbol a_\beta \cdot \boldsymbol d^\varepsilon_\alpha)$
+    \item 假定应力:
+        $\displaystyle \boldsymbol a_\alpha N^{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol d_N^\beta
+        \quad\Rightarrow \quad
+        N^{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a^\alpha \cdot \boldsymbol d_N^\beta$
+    \end{itemize}
+    \textbf{薄膜应变部分Hu-Washizu变分原理}
+    {\footnotesize
+    \begin{equation*}
+        - \int_\Omega h \delta \varepsilon_{\alpha\beta} C^{\alpha\beta\gamma\eta}\varepsilon_{\gamma\eta}d\Omega 
+        + \int_\Omega \delta \varepsilon_{\alpha\beta} N^{\alpha\beta} d\Omega = 0
+    \end{equation*}
+    \begin{equation*}
+        \int_\Omega \delta N^{\alpha\beta} \varepsilon_{\alpha\beta} d\Omega
+        - \int_\Gamma \delta \boldsymbol T_N \cdot \boldsymbol u d\Gamma 
+        + \int_\Omega \delta \boldsymbol b_N \cdot \boldsymbol v d\Omega 
+        + \int_{\Gamma_u} \delta \boldsymbol T_N \cdot \boldsymbol u d\Gamma 
+        = \int_{\Gamma_u} \delta \boldsymbol T_N \cdot \bar{\boldsymbol u} d\Gamma 
+    \end{equation*}}
+\end{frame}
+
+\begin{frame}{薄壳问题的Hu-Washizu变分原理伽辽金弱形式}
+    \textbf{薄壳弯曲应变部分变分一致性条件}
+    {\footnotesize
+    \begin{equation*}
+        \int_\Omega \delta \kappa_{\alpha\beta} M^{\alpha\beta}d\Omega = \int_\Gamma \delta \theta_{\boldsymbol n} M_{\boldsymbol n \boldsymbol n}d\Gamma - \int_\Gamma \delta \boldsymbol u \cdot \boldsymbol T_M d\Gamma - (\delta \boldsymbol u \cdot P \boldsymbol a_3)_{\boldsymbol x \in C} - \int_\Omega \boldsymbol u \cdot \boldsymbol b_M d\Omega
+    \end{equation*}}
+
+    \centering
+    \begin{tcolorbox}[colframe=MediumBlue, colback=white,width=0.9\textwidth]
+    \footnotesize\vspace{-10pt}
+    \begin{columns}
+        \column{0.45\textwidth}
+        \begin{align*}
+            \delta \kappa_{\alpha\beta} M^{\alpha\beta}
+            &={\color{blue}-\delta\boldsymbol u_{,\alpha\vert\beta}}\cdot {\color{red}\boldsymbol a_3 M^{\alpha\beta}} \\
+            \delta \theta_{\boldsymbol n} M_{\boldsymbol n \boldsymbol n}&=-{\color{blue}\delta \boldsymbol u_{,\alpha}}\cdot {\color{red}\boldsymbol a_3 M^{\beta\gamma}} n^\alpha n_\beta n_\gamma 
+        \end{align*}
+        \column{0.45\textwidth}
+        \begin{align*}
+            \boldsymbol T_M &= ({\color{red}\boldsymbol a_3 M^{\alpha\beta}}s_\alpha n_\beta)_{,\gamma} s^\gamma
+            + ({\color{red}\boldsymbol a_3 M^{\alpha\beta}})\vert_\beta n_\alpha \\
+            P\boldsymbol a_3 &= -[[{\color{red}\boldsymbol a_3 M^{\alpha\beta}}s_\alpha n_\beta]] \\
+            \boldsymbol b_M &= ({\color{red}\boldsymbol a_3 M^{\alpha\beta}})\vert_{\alpha\beta}
+        \end{align*}
+    \end{columns}
+    \end{tcolorbox}
+
+    \tikz{\node[
+        single arrow, draw,
+        fill=MediumBlue,
+        minimum width=0.1cm,
+        minimum height=0.7cm,
+        single arrow head extend=0.2cm,
+        % single arrow tip angle=60,
+        shape border rotate=270,
+    ] {};}
+    % \vspace{-5pt}
+
+    \begin{itemize}
+    \item 假定应变:
+        $\displaystyle 
+        -\boldsymbol u_{,\alpha}\vert_\beta(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol d_{\alpha\beta}^\kappa 
+        \quad \;\; \Rightarrow \quad
+        \kappa_{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a_3 \cdot \boldsymbol d_{\alpha\beta}^\kappa$
+    \item 假定应力:
+        $\displaystyle 
+        \boldsymbol a_3 M^{\alpha\beta h}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol d^{\alpha\beta}_M
+        \quad\Rightarrow \quad
+        M^{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a_3 \cdot \boldsymbol d^{\alpha\beta}_M$
+    \end{itemize}
+\end{frame}
+
+% \begin{frame}{薄壳问题的Hu-Washizu变分原理离散控制方程}
+
+% \end{frame}
+
+\begin{frame}{准变分一致型伽辽金无网格法}
+    \begin{columns}
+        \column{0.35\textwidth}
+            \textbf{位移离散}
+                \begin{align*}
+                    &\boldsymbol u^h(\boldsymbol \xi) = \sum_{I=1}^{n_p} \Psi_I(\boldsymbol \xi) \boldsymbol d_I \\
+                    &\boldsymbol p(\boldsymbol \xi) = \{1,\;\xi^1,\;\xi^2,\;(\xi^1)^2,\xi^1\xi^2,(\xi^2)^2\}^T
+                \end{align*}
+            \textbf{应变与应力离散}
+            \only<1>{
+                \begin{align*}
+                    &\varepsilon_{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi)\frac{1}{2}(\boldsymbol a_\alpha \cdot \boldsymbol d_\beta^\varepsilon + \boldsymbol a_\beta \cdot \boldsymbol d^\varepsilon_\alpha) \\
+                    &\kappa_{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a_3 \cdot \boldsymbol d_{\alpha\beta}^\kappa \\
+                    &N^{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a^\alpha \cdot \boldsymbol d_N^\beta \\
+                    &M^{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a_3 \cdot \boldsymbol d^{\alpha\beta}_M \\
+                    & \boldsymbol q(\boldsymbol \xi) = \{1,\;\xi^1,\;\xi^2\}^T
+                \end{align*}
+                }
+                \only<2->{
+                \begin{align*}
+                    &\varepsilon_{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi)\frac{1}{2}(\boldsymbol a_\alpha \cdot \alert{\boldsymbol d_\beta^\varepsilon} + \boldsymbol a_\beta \cdot \alert{\boldsymbol d^\varepsilon_\alpha}) \\
+                    &\kappa_{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a_3 \cdot \alert{\boldsymbol d_{\alpha\beta}^\kappa} \\
+                    &N^{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a^\alpha \cdot \alert{\boldsymbol d_N^\beta} \\
+                    &M^{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a_3 \cdot \alert{\boldsymbol d^{\alpha\beta}_M} \\
+                    & \boldsymbol q(\boldsymbol \xi) = \{1,\;\xi^1,\;\xi^2\}^T
+                \end{align*}
+                }
+        \column{0.55\textwidth}
+            \begin{figure}
+                \includegraphics[width=\textwidth]{figures/2.png}
+            \end{figure}
+
+            \only<2>{\centering\begin{tcolorbox}[colback=red!5, colframe=red!75!black,left=5pt,right=5pt,width=0.8\textwidth]
+                \bfseries\centering 应力应变在背景积分域内求解
+            \end{tcolorbox}}
+
+            \only<3>{
+
+                \vspace{-10pt}
+
+                \textbf{离散控制方程}
+
+                \vspace{-10pt}
+
+                \begin{equation*}
+                    (\boldsymbol K + \tilde{\boldsymbol K} + \bar{\boldsymbol K} )\boldsymbol d = \boldsymbol f + \tilde{\boldsymbol f} + \bar{\boldsymbol f}
+                \end{equation*}
+
+                \centering\begin{tcolorbox}[colback=red!5, colframe=red!75!black,left=5pt,right=5pt,width=0.8\textwidth]
+                    \bfseries\centering 采用低阶高斯积分采样点组装
+                \end{tcolorbox}
+            }
+
+    \end{columns}
+\end{frame}
+
+\begin{frame}{与Nitsche法对比}
+
+    \textbf{一致项}
+    \quad
+    \alert{$\checkmark$形函数二阶及以上导数采用光滑梯度代替，提高计算效率}
+
+    \vspace{10pt}
+
+    \begin{columns}
+        \column{0.45\textwidth}
+
+        \textrm{HW法:}
+
+        \vspace{-10pt}
+
+        {\footnotesize
+        \begin{equation*}
+            \begin{aligned}
+            \tilde{\boldsymbol K}_{IJ} &= - \int_{\Gamma_v} (\Psi_I \alert{\tilde{\boldsymbol T}_{NJ}} + \alert{\tilde{\boldsymbol T}_{NI}} \Psi_J) d\Gamma \\
+            &+ \int_{\Gamma_\theta} (\Psi_{I,\gamma} n^\gamma \boldsymbol a_3 \tilde{\boldsymbol M}_{\boldsymbol{nn}J} + \boldsymbol a_3 \tilde{\boldsymbol M}_{\boldsymbol{nn}I} \Psi_{J,\gamma}n^\gamma)d\Gamma \\
+            &+ ([[\Psi_I \boldsymbol a_3 \tilde{\boldsymbol P}_J]] + [[\tilde{\boldsymbol P}_I \boldsymbol a_3 \Psi_J]])_{\boldsymbol x \in C_v} 
+            \end{aligned}
+        \end{equation*}}
+        \column{0.45\textwidth}
+
+        \textrm{Nitsche法:}
+
+        \vspace{-10pt}
+
+        {\footnotesize
+        \begin{equation*}
+            \begin{aligned}
+                \boldsymbol K^c_{IJ} = &- \int_{\Gamma_v} (\Psi_I \alert{\boldsymbol T_{NJ}} + \alert{\boldsymbol T_{NI}} \Psi_J) d\Gamma \\
+                &+ \int_{\Gamma_\theta} (\Psi_{I,\gamma} n^\gamma \boldsymbol a_3 \boldsymbol M_{\boldsymbol{nn}J} + \boldsymbol a_3 \boldsymbol M_{\boldsymbol{nn}I} \Psi_{J,\gamma}n^\gamma)d\Gamma \\
+                & + ([[\Psi_I \boldsymbol a_3 \boldsymbol P_J]] + [[\boldsymbol P_I \boldsymbol a_3 \Psi_J]])_{\boldsymbol x \in C_v}
+            \end{aligned}
+        \end{equation*}}
+    \end{columns}
+
+    \vspace{10pt}
+
+    \textbf{稳定项}
+    \quad
+    \alert{$\checkmark$自带稳定项，无需采用人工经验参数}
+
+    \vspace{-10pt}
+
+    \footnotesize
+    \begin{align*}
+        &\textrm{\normalsize HW法:}
+        &&\bar{\boldsymbol K}_{IJ} = - \int_{\Gamma_v} \bar{\boldsymbol T}_{MI} \Psi_J d\Gamma 
+        + \int_{\Gamma_\theta} \boldsymbol a_3\bar{\boldsymbol M}_{\boldsymbol{nn}I} \Psi_{J,\gamma}n^\gamma d\Gamma + [[\bar{\boldsymbol P}_I \boldsymbol a_3 \Psi_J]]_{\boldsymbol x \in C_v}  \\
+        &\textrm{\normalsize Nitsche法:}\quad
+        &&\boldsymbol K^s_{IJ} = \alert{\boldsymbol \alpha_v} \int_{\Gamma_v} \Psi_I \Psi_J d\Gamma 
+        + \alert{\alpha_\theta} \int_{\Gamma_\theta} \Psi_{I,\eta} n^\eta \boldsymbol a_3 \boldsymbol a_3 n^\gamma\Psi_{J,\gamma} d\Gamma + \alert{\alpha_C} [[\Psi_I \boldsymbol a_3 \boldsymbol a_3 \Psi_J]]_{\boldsymbol x \in C_v} 
+    \end{align*}
+    
 \end{frame}
