@@ -1,12 +1,59 @@
 \section{薄壳问题变分一致性与准变分一致积分方案}
 
 \begin{frame}{基于Hellinger-Reissner变分一致型伽辽金无网格法}
+    \textbf{薄板问题Hellinger-Reissner变分原理弱形式}
+    {\footnotesize
+    \begin{align*}
+    &\int_\Omega \tikzmarknode[draw=red, inner sep=2pt, thick]{m}{\delta M_{\alpha\beta}} D^{-1}_{\alpha\beta\gamma\eta} M_{\gamma\eta} d\Omega
+    + \int_{\Gamma_V} \delta V_{\boldsymbol n} w d\Gamma
+    - \int_{\Gamma_M} \delta M_{\boldsymbol n \boldsymbol n} w_{,\boldsymbol n} d\Gamma
+    % + \delta P w\vert_{\boldsymbol x\in C_w} 
+    = 
+    \int_{\Gamma_w} \delta V_{\boldsymbol n} \bar w d\Gamma
+    - \int_{\Gamma_\theta} \delta M_{\boldsymbol n \boldsymbol n} \bar \theta_{\boldsymbol n} d\Gamma
+    % + \delta P \bar w \vert_{\boldsymbol x \in \Gamma_w}
+    \\
+    &\int_{\Gamma_V} \tikzmarknode[draw=red, inner sep=2pt, thick]{w}{\delta w} V_{\boldsymbol n} d\Gamma
+    - \int_{\Gamma_M} \delta w_{,\boldsymbol n} M_{\boldsymbol n \boldsymbol n} d\Gamma
+    =
+    \int_{\Gamma_V} \delta w \bar V_{\boldsymbol n} d\Gamma
+    - \int_{\Gamma_M} \delta w_{,\boldsymbol n} \bar M_{\boldsymbol n \boldsymbol n} d\Gamma
+    + \int_\Omega \delta w \bar q d\Omega
+    \end{align*}}
+
+    \begin{columns}
+        \column{0.45\textwidth}
+            \begin{tcolorbox}[height=6.5em]
+                \tikzmarknode{wh}{\textbf{无网格近似挠度}}
+                \begin{equation*}
+                w(\boldsymbol x) = \sum_{I=1}^{n_p} \Psi_I(\boldsymbol x) d_I^w
+                \end{equation*}
+            \end{tcolorbox}
+        \column{0.45\textwidth}
+            \begin{tcolorbox}[height=6.5em]
+                \tikzmarknode{mh}{\textbf{局部多项式近似弯矩}}
+                \begin{equation*}
+                M_{\alpha\beta}(\boldsymbol x) = \boldsymbol q^T(\boldsymbol x) \boldsymbol d_{\alpha\beta}^M
+                \end{equation*}
+            
+            \end{tcolorbox}
+    
+    \end{columns}
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[-{Stealth}, thick, red](m.east) to [out=0,in=90] ([yshift=3.5em]mh.north);
+        \draw[-{Stealth}, thick, red](w.south) to [out=270,in=90] ([yshift=3em]wh.north);
+    \end{tikzpicture}
+    \begin{center}
+    \begin{tcolorbox}[colback=red!5, colframe=red!75!black,left=5pt,right=5pt, width=0.8\textwidth]
+        \bfseries\centering 满足全域变分一致性，避免计算复杂耗时的形函数高阶导数
+    \end{tcolorbox}
+    \end{center}
 
 \end{frame}
 
 \begin{frame}{基于Hellinger-Reissner变分一致型伽辽金无网格法}
 \begin{columns}
-    \column{0.35\textwidth}
+    \column{0.3\textwidth}
         \begin{figure}
             \includegraphics[width=\textwidth]{figures/tri1.png}
             \caption{\bfseries 简支三角形板问题}
@@ -23,10 +70,10 @@
         \end{tcolorbox}
 
 
-    \column{0.6\textwidth}
+    \column{0.65\textwidth}
         \begin{figure}
-            \includegraphics[width=0.9\textwidth]{figures/tri2.png}
-            \caption{\bfseries\hspace{1cm}人工经验参数敏感性分析}
+            \includegraphics[width=\textwidth]{figures/tri2.png}
+            \caption{\bfseries\hspace{0cm}人工经验参数敏感性分析}
         \end{figure}
 \end{columns}
 \end{frame}
@@ -300,11 +347,11 @@
     \footnotesize
     \begin{align*}
         &\textrm{\normalsize HW法:}
-        &&\bar{\boldsymbol K}_{IJ} = - \int_{\Gamma_v} \bar{\boldsymbol T}_{MI} \Psi_J d\Gamma 
-        + \int_{\Gamma_\theta} \boldsymbol a_3\bar{\boldsymbol M}_{\boldsymbol{nn}I} \Psi_{J,\gamma}n^\gamma d\Gamma + [[\bar{\boldsymbol P}_I \boldsymbol a_3 \Psi_J]]_{\boldsymbol x \in C_v}  \\
+        &&\bar{\boldsymbol K}_{IJ} = - \int_{\Gamma_u} \bar{\boldsymbol T}_{MI} \Psi_J d\Gamma 
+        + \int_{\Gamma_\theta} \boldsymbol a_3\bar{\boldsymbol M}_{\boldsymbol{nn}I} \Psi_{J,\gamma}n^\gamma d\Gamma + [[\bar{\boldsymbol P}_I \boldsymbol a_3 \Psi_J]]_{\boldsymbol x \in C_u}  \\
         &\textrm{\normalsize Nitsche法:}\quad
         &&\boldsymbol K^s_{IJ} = \alert{\boldsymbol \alpha_v} \int_{\Gamma_v} \Psi_I \Psi_J d\Gamma 
-        + \alert{\alpha_\theta} \int_{\Gamma_\theta} \Psi_{I,\eta} n^\eta \boldsymbol a_3 \boldsymbol a_3 n^\gamma\Psi_{J,\gamma} d\Gamma + \alert{\alpha_C} [[\Psi_I \boldsymbol a_3 \boldsymbol a_3 \Psi_J]]_{\boldsymbol x \in C_v} 
+        + \alert{\alpha_\theta} \int_{\Gamma_\theta} \Psi_{I,\eta} n^\eta \boldsymbol a_3 \boldsymbol a_3 n^\gamma\Psi_{J,\gamma} d\Gamma + \alert{\alpha_C} [[\Psi_I \boldsymbol a_3 \boldsymbol a_3 \Psi_J]]_{\boldsymbol x \in C_u} 
     \end{align*}
     
 \end{frame}
