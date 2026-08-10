@@ -1,6 +1,6 @@
 \section{薄壳结构伽辽金无网格法}
 
-\begin{frame}{薄壳结构控制方程}
+\begin{frame}{薄壳结构}
 
 \begin{columns}
     \column{0.45\textwidth}
@@ -13,7 +13,7 @@
         \end{equation*}
         \textbf{Kirchhoff假设}
         \begin{equation*}
-            \epsilon_{3i} = 0 \Rightarrow
+            \epsilon_{3i} = 0 
             \Rightarrow \boldsymbol \theta = - \boldsymbol u_{,\alpha} \cdot \boldsymbol a_3 \boldsymbol a^\alpha
         \end{equation*}
         \vspace{-25pt}
@@ -32,7 +32,7 @@
         \textbf{薄壳结构曲率}
         \begin{align*}
             \varepsilon_{\alpha\beta} &= \frac{1}{2}(\boldsymbol a_\alpha \cdot \boldsymbol u_{,\beta} + \boldsymbol u_{,\alpha}\cdot \boldsymbol a_\beta) \\
-            \kappa_{\alpha\beta} &= (\Gamma^\gamma_{\alpha\beta}\boldsymbol u_{,\gamma} - \alert{\boldsymbol u_{,\alpha\beta}}) \cdot \boldsymbol a_3 = - \boldsymbol u_{,\alpha}\vert_\beta \cdot \boldsymbol a_3
+            \kappa_{\alpha\beta} &= (\Gamma^\gamma_{\alpha\beta}\boldsymbol u_{,\gamma} - \alert{\boldsymbol u_{,\alpha\beta}}) \cdot \boldsymbol a_3 = - \boldsymbol u_{,\alpha\vert\beta} \cdot \boldsymbol a_3
         \end{align*}
 
 
@@ -42,7 +42,7 @@
             \caption{\bfseries 薄壳结构中面}
         \end{figure}
         \begin{tcolorbox}[colback=red!5, colframe=red!75!black,left=5pt,right=5pt]
-            \bfseries 薄壳结构分析曲率近似需要高阶形函数
+            \bfseries 薄壳结构分析需要$C_1$连续形函数
         \end{tcolorbox}
 \end{columns}
 
@@ -77,7 +77,7 @@
             \vspace{-18pt}
 
             \includegraphics[width=\textwidth]{figures/3.png}
-            \caption{\bfseries 再生核近似}
+            \caption{\bfseries 再生核无网格近似}
         \end{figure}
 
 \end{columns}
@@ -90,8 +90,8 @@
         {\linespread{1.5}\selectfont
         \textbf{变分一致性阶次}等于伽辽金弱形式能准确求解由多项式所组成的精确解阶次:
         {\footnotesize\begin{equation*}
-        \int_\Omega h \delta \varepsilon_{\alpha\beta} C^{\alpha\beta\gamma\eta} \varepsilon_{\gamma\eta}d\Omega
-        +\int_\Omega \frac{h^3}{12}\delta \kappa_{\alpha\beta}C^{\alpha\beta\gamma\eta}\kappa_{\gamma\eta}d\Omega = f(\boldsymbol p^{[q]})
+        \int_\Omega h \delta \varepsilon_{\alpha\beta} C^{\alpha\beta\gamma\eta} \varepsilon_{\gamma\eta}(\boldsymbol p)d\Omega
+        +\int_\Omega \frac{h^3}{12}\delta \kappa_{\alpha\beta}C^{\alpha\beta\gamma\eta}\kappa_{\gamma\eta}(\boldsymbol p)d\Omega = f(\boldsymbol p)
         \end{equation*}}
         }
 
@@ -110,8 +110,8 @@
     \Vert \boldsymbol u - \boldsymbol u_h\Vert_{H_e} \le \tikzmarknode[draw=red, inner sep=2pt, thick]{a}{C_p s^p\vert \boldsymbol u \vert_{H_p}} + \tikzmarknode[draw=red, inner sep=2pt, thick]{b}{C_q s^q \vert \boldsymbol u \vert_{H_q}}
     \end{equation*}
     \begin{tikzpicture}[remember picture, overlay]
-        \draw[-{Stealth}, thick, red](a.south) -- ++(0,-0.3) node[below]{一致性条件控制};
-        \draw[-{Stealth}, thick, red](b.north) -- ++(0,0.3) node[above]{变分一致性条件控制};
+        \draw[-{Stealth}, thick, red](a.south) -- ++(0,-0.3) node[below]{\bfseries 一致性条件控制};
+        \draw[-{Stealth}, thick, red](b.north) -- ++(0,0.3) node[above]{\bfseries 变分一致性条件控制};
     \end{tikzpicture}
 
 \end{tcolorbox}

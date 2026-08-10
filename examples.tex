@@ -6,14 +6,23 @@
                 \caption{\bfseries 平面分片试验模型}
             \end{figure}
 
-            \vspace{0.1cm}
+            % \vspace{0.1cm}
 
             \centering
-            \textbf{精确解:}
-            \footnotesize
-            $\boldsymbol u = \begin{Bmatrix}
-            (\xi^1+2\xi^2)^n \\ (3\xi^1+4\xi^2)^n \\ (5\xi^1+6\xi^2)^n
-            \end{Bmatrix}$
+            % \textbf{精确解:}
+            % \footnotesize
+            % $\boldsymbol u = \begin{Bmatrix}
+            % (\xi^1+2\xi^2)^n \\ (3\xi^1+4\xi^2)^n \\ (5\xi^1+6\xi^2)^n
+            % \end{Bmatrix}$
+            $
+            \left \{
+                \begin{aligned}
+                    &\boldsymbol a_1 = \{1.0,0.0,0.0\}^T \\
+                    &\boldsymbol a_2 = \{0.0,1.0,0.0\}^T \\
+                    &\boldsymbol a_3 = \{0.0,0.0,1.0\}^T \\
+                \end{aligned}
+            \right .
+            $
         \column{0.65\textwidth}
             \begin{table}[!ht]
             \centering
@@ -45,14 +54,23 @@
                 \caption{\bfseries 曲面分片试验模型}
             \end{figure}
 
-            \vspace{0.1cm}
+            % \vspace{0.1cm}
 
             \centering
-            \textbf{精确解:}
-            \footnotesize
-            $\boldsymbol u = \begin{Bmatrix}
-            (\xi^1+2\xi^2)^n \\ (3\xi^1+4\xi^2)^n \\ (5\xi^1+6\xi^2)^n
-            \end{Bmatrix}$
+            % \textbf{精确解:}
+            % \footnotesize
+            % $\boldsymbol u = \begin{Bmatrix}
+            % (\xi^1+2\xi^2)^n \\ (3\xi^1+4\xi^2)^n \\ (5\xi^1+6\xi^2)^n
+            % \end{Bmatrix}$
+            $
+            \left \{
+                \begin{aligned}
+                    &\boldsymbol a_1 = \{{\textstyle\cos(\frac{\xi^1}{R}),0.0,-\sin(\frac{\xi^1}{R})}\}^T \\
+                    &\boldsymbol a_2 = \{0.0,1.0,0.0\}^T \\
+                    &\boldsymbol a_3 = \{{\textstyle\sin(\frac{\xi^1}{R}),0.0,\cos(\frac{\xi^1}{R})}\}^T \\
+                \end{aligned}
+            \right .
+            $
 
         \column{0.65\textwidth}
             \begin{table}[!ht]
@@ -78,7 +96,7 @@
 \begin{frame}{分片试验}
     \begin{figure}
         \includegraphics[width=0.8\textwidth]{figures/ptc_r2.png}
-        \caption{曲壳分片试验$M^{12}$云图}
+        \caption{\bfseries 曲壳分片试验$M^{12}$云图}
     \end{figure}
 \end{frame}
 

@@ -4,16 +4,18 @@
     \textbf{薄板问题Hellinger-Reissner变分原理弱形式}
     {\footnotesize
     \begin{align*}
-    &\int_\Omega \tikzmarknode[draw=red, inner sep=2pt, thick]{m}{\delta M_{\alpha\beta}} D^{-1}_{\alpha\beta\gamma\eta} M_{\gamma\eta} d\Omega
+    &\int_\Omega \only<1>{\tikzmarknode[draw=red, inner sep=2pt, thick]{m}{\delta M_{\alpha\beta}}} \only<2>{\delta M_{\alpha\beta}} D^{-1}_{\alpha\beta\gamma\eta} M_{\gamma\eta} d\Omega
     + \int_{\Gamma_V} \delta V_{\boldsymbol n} w d\Gamma
     - \int_{\Gamma_M} \delta M_{\boldsymbol n \boldsymbol n} w_{,\boldsymbol n} d\Gamma
     % + \delta P w\vert_{\boldsymbol x\in C_w} 
     = 
-    \int_{\Gamma_w} \delta V_{\boldsymbol n} \bar w d\Gamma
-    - \int_{\Gamma_\theta} \delta M_{\boldsymbol n \boldsymbol n} \bar \theta_{\boldsymbol n} d\Gamma
+    \only<1>{\int_{\Gamma_w} \delta V_{\boldsymbol n} \bar w d\Gamma
+    - \int_{\Gamma_\theta} \delta M_{\boldsymbol n \boldsymbol n} \bar \theta_{\boldsymbol n} d\Gamma}
+    \only<2>{\int_{\Gamma_w} \delta V_{\boldsymbol n} \alert{\bar w} d\Gamma
+    - \int_{\Gamma_\theta} \delta M_{\boldsymbol n \boldsymbol n} \alert{\bar \theta_{\boldsymbol n}} d\Gamma}
     % + \delta P \bar w \vert_{\boldsymbol x \in \Gamma_w}
     \\
-    &\int_{\Gamma_V} \tikzmarknode[draw=red, inner sep=2pt, thick]{w}{\delta w} V_{\boldsymbol n} d\Gamma
+    &\int_{\Gamma_V} \only<1>{\tikzmarknode[draw=red, inner sep=2pt, thick]{w}{\delta w}} \only<2>{\delta w} V_{\boldsymbol n} d\Gamma
     - \int_{\Gamma_M} \delta w_{,\boldsymbol n} M_{\boldsymbol n \boldsymbol n} d\Gamma
     =
     \int_{\Gamma_V} \delta w \bar V_{\boldsymbol n} d\Gamma
@@ -33,12 +35,13 @@
             \begin{tcolorbox}[height=6.5em]
                 \tikzmarknode{mh}{\textbf{局部多项式近似弯矩}}
                 \begin{equation*}
-                M_{\alpha\beta}(\boldsymbol x) = \boldsymbol q^T(\boldsymbol x) \boldsymbol d_{\alpha\beta}^M
+                M_{\alpha\beta}(\boldsymbol x) = \boldsymbol q^T(\boldsymbol x) \boldsymbol d_{\alpha\beta}^M\quad \mathrm{in}\; \Omega_C
                 \end{equation*}
             
             \end{tcolorbox}
     
     \end{columns}
+    \only<1>{
     \begin{tikzpicture}[remember picture, overlay]
         \draw[-{Stealth}, thick, red](m.east) to [out=0,in=90] ([yshift=3.5em]mh.north);
         \draw[-{Stealth}, thick, red](w.south) to [out=270,in=90] ([yshift=3em]wh.north);
@@ -48,6 +51,14 @@
         \bfseries\centering 满足全域变分一致性，避免计算复杂耗时的形函数高阶导数
     \end{tcolorbox}
     \end{center}
+    }
+    \only<2>{
+    \begin{center}
+    \begin{tcolorbox}[colback=red!5, colframe=red!75!black,left=5pt,right=5pt, width=0.8\textwidth]
+        \bfseries\centering Hellinger-Reissner变分原理弱形式包含本质边界条件施加过程，无需人工经验参数
+    \end{tcolorbox}
+    \end{center}
+    }
 
 \end{frame}
 
@@ -145,11 +156,13 @@
     \begin{equation*}
         \int_\Omega \delta \varepsilon_{\alpha\beta} N^{\alpha\beta} d\Omega = \int_\Gamma \delta \boldsymbol u \cdot \boldsymbol T_N d\Gamma - \int_\Omega \delta \boldsymbol u \cdot \boldsymbol b_N d\Omega
     \end{equation*}
-    \textbf{存在问题:}
+    \begin{tcolorbox}[colback=red!5, colframe=red!75!black,left=5pt,right=5pt, width=\textwidth]
+    \textbf{多项式一致性条件$\Leftrightarrow$非多项式变分一致性条件:}
     \begin{itemize}
         \item 位移为多项式，可能需要满足非多项式变分一致性条件。
         \item 假设应力为多项式，变分一致性条件的右端也存在非线性项。
     \end{itemize}
+    \end{tcolorbox}
 \end{frame}
 
 \begin{frame}{薄壳问题的Hu-Washizu变分原理伽辽金弱形式}
@@ -226,7 +239,7 @@
     \begin{itemize}
     \item 假定应变:
         $\displaystyle 
-        -\boldsymbol u_{,\alpha}\vert_\beta(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol d_{\alpha\beta}^\kappa 
+        -\boldsymbol u_{,\alpha\vert\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol d_{\alpha\beta}^\kappa 
         \quad \;\; \Rightarrow \quad
         \kappa_{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi) \boldsymbol a_3 \cdot \boldsymbol d_{\alpha\beta}^\kappa$
     \item 假定应力:
@@ -243,13 +256,16 @@
 
 \begin{frame}{准变分一致型伽辽金无网格法}
     \begin{columns}
-        \column{0.35\textwidth}
+        \column{0.45\textwidth}
             \textbf{位移离散}
-                \begin{align*}
-                    &\boldsymbol u^h(\boldsymbol \xi) = \sum_{I=1}^{n_p} \Psi_I(\boldsymbol \xi) \boldsymbol d_I \\
-                    &\boldsymbol p(\boldsymbol \xi) = \{1,\;\xi^1,\;\xi^2,\;(\xi^1)^2,\xi^1\xi^2,(\xi^2)^2\}^T
-                \end{align*}
+            \quad
+            \alert{\bfseries$\checkmark$保证一致性}
+            \begin{align*}
+                &\boldsymbol u^h(\boldsymbol \xi) = \sum_{I=1}^{n_p} \Psi_I(\boldsymbol \xi) \boldsymbol d_I \\
+                &\boldsymbol p(\boldsymbol \xi) = \{1,\;\xi^1,\;\xi^2,\;(\xi^1)^2,\xi^1\xi^2,(\xi^2)^2\}^T
+            \end{align*}
             \textbf{应变与应力离散}
+            \alert{\bfseries$\checkmark$保证变分一致性}
             \only<1>{
                 \begin{align*}
                     &\varepsilon_{\alpha\beta}(\boldsymbol \xi) = \boldsymbol q^T(\boldsymbol \xi)\frac{1}{2}(\boldsymbol a_\alpha \cdot \boldsymbol d_\beta^\varepsilon + \boldsymbol a_\beta \cdot \boldsymbol d^\varepsilon_\alpha) \\
@@ -301,7 +317,7 @@
 
     \textbf{一致项}
     \quad
-    \alert{$\checkmark$形函数二阶及以上导数采用光滑梯度代替，提高计算效率}
+    \alert{\bfseries$\checkmark$形函数二阶及以上导数采用光滑梯度代替，提高计算效率}
 
     \vspace{10pt}
 
@@ -315,7 +331,7 @@
         {\footnotesize
         \begin{equation*}
             \begin{aligned}
-            \tilde{\boldsymbol K}_{IJ} &= - \int_{\Gamma_v} (\Psi_I \alert{\tilde{\boldsymbol T}_{NJ}} + \alert{\tilde{\boldsymbol T}_{NI}} \Psi_J) d\Gamma \\
+            \tilde{\boldsymbol K}_{IJ} &= - \int_{\Gamma_v} (\Psi_I \alert{\tilde{\boldsymbol T}_{NJ}(\Psi_{J,\alpha})} + \alert{\tilde{\boldsymbol T}_{NI}(\Psi_{I,\alpha})} \Psi_J) d\Gamma \\
             &+ \int_{\Gamma_\theta} (\Psi_{I,\gamma} n^\gamma \boldsymbol a_3 \tilde{\boldsymbol M}_{\boldsymbol{nn}J} + \boldsymbol a_3 \tilde{\boldsymbol M}_{\boldsymbol{nn}I} \Psi_{J,\gamma}n^\gamma)d\Gamma \\
             &+ ([[\Psi_I \boldsymbol a_3 \tilde{\boldsymbol P}_J]] + [[\tilde{\boldsymbol P}_I \boldsymbol a_3 \Psi_J]])_{\boldsymbol x \in C_v} 
             \end{aligned}
@@ -329,7 +345,7 @@
         {\footnotesize
         \begin{equation*}
             \begin{aligned}
-                \boldsymbol K^c_{IJ} = &- \int_{\Gamma_v} (\Psi_I \alert{\boldsymbol T_{NJ}} + \alert{\boldsymbol T_{NI}} \Psi_J) d\Gamma \\
+                \boldsymbol K^c_{IJ} = &- \int_{\Gamma_v} (\Psi_I \alert{\boldsymbol T_{NJ}(\Psi_{J,\alpha\beta\gamma})} + \alert{\boldsymbol T_{NI}(\Psi_{I,\alpha\beta\gamma})} \Psi_J) d\Gamma \\
                 &+ \int_{\Gamma_\theta} (\Psi_{I,\gamma} n^\gamma \boldsymbol a_3 \boldsymbol M_{\boldsymbol{nn}J} + \boldsymbol a_3 \boldsymbol M_{\boldsymbol{nn}I} \Psi_{J,\gamma}n^\gamma)d\Gamma \\
                 & + ([[\Psi_I \boldsymbol a_3 \boldsymbol P_J]] + [[\boldsymbol P_I \boldsymbol a_3 \Psi_J]])_{\boldsymbol x \in C_v}
             \end{aligned}
@@ -340,7 +356,7 @@
 
     \textbf{稳定项}
     \quad
-    \alert{$\checkmark$自带稳定项，无需采用人工经验参数}
+    \alert{\bfseries$\checkmark$自带稳定项，无需采用人工经验参数}
 
     \vspace{-10pt}
 
